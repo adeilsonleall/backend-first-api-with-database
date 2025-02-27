@@ -1,13 +1,13 @@
-import pool from "./conexao.js";
+import pool from "./conexao.js"; // Importa o pool de conexões do arquivo conexao.js.
 
-export async function retornaCampeonatos() {
-    const conexao = await pool.getConnection();
+export async function retornaCampeonatos() { // Exporta uma função assíncrona chamada retornaCampeonatos.
+    const conexao = await pool.getConnection(); // Obtém uma conexão do pool de conexões.
 
-    const campeonatos_tb = await conexao.query('SELECT id, campeao, vice, ano FROM campeonatos');
+    const campeonatos_tb = await conexao.query('SELECT id, campeao, vice, ano FROM campeonatos'); // Executa uma consulta SQL que retorna as colunas id, campeao, vice e ano da tabela campeonatos.
 
-    const campeonatos = campeonatos_tb[0];
+    const campeonatos = campeonatos_tb[0]; // Armazena os resultados da consulta na variável campeonatos extraindo apenas os dados das linhas da tabela.
 
-    conexao.release();
+    conexao.release(); // Libera a conexão de volta para o pool de conexões.
 
-    return campeonatos;
+    return campeonatos; // Retorna os resultados da consulta.
 }

@@ -1,5 +1,5 @@
 {
-  "name": "backend-api-with-database",
+  "name": "backend-first-api-with-database",
   "version": "1.0.0",
   "main": "index.js",
   "type": "module",
