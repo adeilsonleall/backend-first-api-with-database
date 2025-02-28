@@ -35,3 +35,15 @@ export async function retornaCampeonatosAno(ano) { // Exporta uma função assí
 
     return campeonatos; // Retorna os resultados da consulta.
 }
+
+export async function retornaCampeonatosTime(time) { // Exporta uma função assíncrona chamada retornaCampeonatosID.
+    const conexao = await pool.getConnection(); // Obtém uma conexão do pool de conexões.
+
+    const campeonatos_tb = await conexao.query('SELECT id, campeao, vice, ano FROM campeonatos WHERE campeao ="'+time+'"'); // Executa uma consulta SQL que retorna as colunas id, campeao, vice e ano da tabela campeonatos de acordo com o campeao especificado.
+
+    const campeonatos = campeonatos_tb[0]; // Armazena os resultados da consulta na variável campeonatos extraindo apenas os dados das linhas da tabela.
+
+    conexao.release(); // Libera a conexão de volta para o pool de conexões.
+
+    return campeonatos; // Retorna os resultados da consulta.
+}

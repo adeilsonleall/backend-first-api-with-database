@@ -1,6 +1,11 @@
 import express, { query } from 'express'; // Importa o módulo express.
 import pool from './servico/conexao.js'; // Importa a conexão com o banco de dados.
-import { retornaCampeonatos, retornaCampeonatosID, retornaCampeonatosAno } from './servico/retornaCampeonatos.js'; // Importa a função para retornar campeonatos.
+import { 
+    retornaCampeonatos, 
+    retornaCampeonatosID, 
+    retornaCampeonatosAno,
+    retornaCampeonatosTime 
+} from './servico/retornaCampeonatos.js'; // Importa a função para retornar campeonatos.
 
 const app = express(); // Cria uma instância do módulo express.
 
@@ -8,11 +13,16 @@ app.get('/campeonatos', async (req, res) => { // Define uma rota GET para '/camp
     let campeonatos;
 
     const ano = req.query.ano;
+    const time = req.query.time;
 
-    if(typeof ano === 'undefined') {
+    if(typeof ano === 'undefined' && typeof time === 'undefined') {
         campeonatos = await retornaCampeonatos();
-    } else {
-        campeonatos = await retornaCampeonatosAno(parseInt(ano));
+    }
+    else if (typeof ano !== 'undefined') {
+        campeonatos = await retornaCampeonatosAno(ano);
+    }
+    else if (typeof time !== 'undefined') {
+        campeonatos = await retornaCampeonatosTime(time);
     }
 
     if(campeonatos.length > 0) {
